@@ -1,5 +1,5 @@
 // GET = quem sou eu | POST {action: signup | login | logout}
-const { sql, init, uid, setCookie, clear, hash, check, body } = require('./_lib');
+const { touch, sql, init, uid, setCookie, clear, hash, check, body } = require('./_lib');
 const settings = require('./_settings');
 const tries = new Map();
 module.exports = async (req, res) => {
@@ -11,6 +11,7 @@ module.exports = async (req, res) => {
       const id = uid(req); if (!id) return res.status(401).json({ error: 'off' });
       const [u] = await sql`SELECT u.id, u.name, u.email, u.banned, u.verified, u.beta, u.created_at, COALESCE(p.pats,0) AS pats, COALESCE(p.mood,'feliz') AS mood, (SELECT COUNT(*)::int FROM messages m WHERE m.user_id = u.id AND m.role = 'user') AS msgs FROM users u LEFT JOIN pets p ON p.user_id = u.id WHERE u.id = ${id}`;
       if (!u) { clear(res); return res.status(401).json({ error: 'off' }); }
+      await touch(req, u.id);
       if (u.banned) return res.status(403).json({ error: 'banned', banned: true, user: { name: u.name, email: u.email } }); // mantém o cookie: a pessoa ainda precisa ver a tela de banimento e poder apelar
       setCookie(res, u.id); // renova a sessão: quem volta continua conectado
       // Oferta do plano beta: só aparece se o resgate estiver liberado na Gestão, ainda houver vagas e a pessoa ainda não tiver beta
@@ -72,7 +73,7 @@ module.exports = async (req, res) => {
       if (dup) return res.status(409).json({ error: 'Esse e-mail já tem conta. Tente entrar.' });
       const [u] = await sql`INSERT INTO users(name, email, pass) VALUES (${name}, ${email}, ${hash(pass)}) RETURNING id, name, email`;
       await sql`INSERT INTO pets(user_id) VALUES (${u.id})`;
-      setCookie(res, u.id);
+      setCookie(res, u.id); await touch(req, u.id);
       return res.status(200).json({ user: u });
     }
     if (b.action === 'login') {
@@ -81,6 +82,7 @@ module.exports = async (req, res) => {
       if (!u) return res.status(401).json({ error: 'Não achei nenhuma conta com esse e-mail. Confira o e-mail ou crie uma conta.' });
       const ok = [pass, pass.trim()].some((p) => { try { return check(p, u.pass); } catch { return false; } });
       if (!ok) return res.status(401).json({ error: 'Senha incorreta. Tente de novo.' });
+      await touch(req, u.id);
       if (u.banned) { setCookie(res, u.id); return res.status(403).json({ error: 'Essa conta foi banida.', banned: true }); }
       setCookie(res, u.id);
       return res.status(200).json({ user: { id: u.id, name: u.name, email: u.email } });

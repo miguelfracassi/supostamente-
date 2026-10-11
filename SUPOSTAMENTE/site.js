@@ -62,3 +62,10 @@ const f=document.getElementById('foot');if(f&&J)f.outerHTML=`<footer class="lock
 <div><h4>Conta</h4><a href="/conta">Minha conta</a><a href="/configuracoes">Configurações</a><a href="/termos">Termos de Serviço</a><a href="/diretrizes-de-ia">Diretrizes de IA</a><a href="/privacidade">Política de Privacidade</a></div>
 <div><h4>Contato</h4><a href="https://ticord.website" target="_blank" rel="noopener">ticord.website</a><a href="tel:+5519999894031">(19) 99989-4031</a><a href="mailto:helpticord@gmail.com">helpticord@gmail.com</a></div></div><div class="copy">© 2026 Todos os direitos reservados. Bup é um projeto do Grupo Ticord.</div></footer>`;
 })();
+
+/* Conta a entrada no painel /dados (país e estado vêm dos cabeçalhos da Vercel, no servidor) */
+(()=>{try{
+ if(/^\/(admin|gestao|apelacoes|apela|dados)/i.test(location.pathname))return;
+ let s=sessionStorage.getItem('bup_sid');if(!s){s=Math.random().toString(36).slice(2)+Date.now().toString(36);sessionStorage.setItem('bup_sid',s)}
+ fetch('/api/visit',{method:'POST',keepalive:true,headers:{'Content-Type':'application/json'},body:JSON.stringify({path:location.pathname,sid:s})}).catch(()=>{});
+}catch(e){}})();

@@ -17,7 +17,7 @@ module.exports = async (req, res) => {
         const msgs = await sql`SELECT role, content, mood, created_at FROM messages WHERE user_id = ${cid} ORDER BY id DESC LIMIT 400`;
         return res.status(200).json({ user: u, messages: msgs.reverse() });
       }
-      const rows = await sql`SELECT u.id, u.name, u.email, u.banned, u.verified, u.beta, u.created_at, (SELECT COUNT(*)::int FROM messages m WHERE m.user_id = u.id AND m.role = 'user') AS msgs FROM users u ORDER BY u.created_at DESC`;
+      const rows = await sql`SELECT u.id, u.name, u.email, u.banned, u.verified, u.beta, u.created_at, u.last_country, u.last_region, u.last_city, u.last_seen, (SELECT COUNT(*)::int FROM messages m WHERE m.user_id = u.id AND m.role = 'user') AS msgs FROM users u ORDER BY u.created_at DESC`;
       let loader = true; try { loader = await settings.loader(); } catch (e) {}
       const [pp] = await sql`SELECT COUNT(*)::int AS n FROM appeals WHERE status = 'pending'`;
       let beta = { open: false, slots: 0, used: 0 }; try { beta = await settings.beta(); } catch (e) {}

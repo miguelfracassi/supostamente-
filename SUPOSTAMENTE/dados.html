@@ -1,0 +1,118 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Dados · Ticord</title><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="stylesheet" href="/site.css">
+<style>
+body{padding-top:0}[hidden]{display:none!important}
+.d{max-width:1100px;margin:0 auto;padding:24px 20px 60px}
+.d h1{font-size:clamp(1.6rem,4vw,2.3rem);margin:0 0 4px}.lead{margin:0;color:#444}
+.top{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;flex-wrap:wrap}
+.live{font-weight:700;font-size:.9rem;background:#fff;border:2px solid var(--ink);border-radius:999px;padding:7px 16px;display:flex;gap:8px;align-items:center}
+.live:before{content:"";width:10px;height:10px;border-radius:50%;background:#2e9e4f;animation:pl 1.6s infinite}@keyframes pl{50%{opacity:.25}}
+.kp{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:18px 0}
+.k{background:#fff;border:2px solid var(--ink);border-radius:20px;padding:12px 16px;box-shadow:4px 4px 0 var(--ink)}.k b{display:block;font-size:1.8rem;line-height:1.1}.k span{font-size:.85rem;color:#555}
+.ctl{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
+.gi{display:inline-flex;align-items:center;gap:10px;padding:10px 20px 10px 12px}
+.gi svg{width:26px;height:26px}.gi.on svg{animation:sp var(--sp,12s) linear infinite}@keyframes sp{to{transform:rotate(360deg)}}
+.gi.on{background:#ff9fd2;color:var(--ink)}
+.sp{flex:1;min-width:210px}.sp small{display:flex;justify-content:space-between;font-weight:700;font-size:.82rem;margin-bottom:4px}
+.rl{height:10px;border:2px solid var(--ink);border-radius:999px;background:#fff;overflow:hidden}.rl i{display:block;height:100%;width:0;background:var(--ink)}
+.rl.v i{background:#ffb36b;transition:width .6s}
+.nv{display:flex;gap:6px;align-items:center}.nv .btn{padding:8px 14px}
+.dt{display:flex;gap:6px;flex-wrap:wrap}.dt button{font:inherit;font-weight:700;font-size:.82rem;cursor:pointer;border:2px solid var(--ink);border-radius:999px;padding:5px 12px;background:#fff}
+.dt button[aria-current=true]{background:var(--ink);color:#fff}.dt button:focus-visible,.gi:focus-visible{outline:3px solid var(--b);outline-offset:2px}
+.stage{perspective:1500px;margin-top:14px}
+.pn{background:#fff;border:2px solid var(--ink);border-radius:28px;padding:22px;box-shadow:8px 8px 0 var(--ink);min-height:440px;backface-visibility:hidden}
+.pn h2{margin:0 0 6px;font-size:1.35rem}.pn h3{margin:16px 0 6px;font-size:.95rem;color:#444}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:26px}@media(max-width:760px){.g2{grid-template-columns:1fr}}
+svg.ch{width:100%;height:auto;display:block}
+.hb{list-style:none;margin:0;padding:0;display:grid;gap:9px}.hb li{display:grid;grid-template-columns:minmax(90px,38%) 1fr auto;gap:10px;align-items:center}
+.hb .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.hb small{color:#666}
+.hb i{display:block;height:16px;border:2px solid var(--ink);border-radius:999px;background:linear-gradient(var(--c),var(--c)) 0/var(--w) 100% no-repeat,#fff}
+.em,.nt{color:#555;margin:6px 0}.nt{font-size:.9rem}
+.mtr{margin:12px 0}.mh{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:.92rem;margin-bottom:5px}
+.mt{height:20px;border:2px solid var(--ink);border-radius:999px;background:#fff;overflow:hidden}.mt i{display:block;height:100%;background:#8fb3ff;border-right:2px solid var(--ink)}
+.tl{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}.tt{border:2px solid var(--ink);border-radius:16px;padding:9px 12px;background:#fffbea}.tt b{display:block;font-size:1.15rem}.tt span{font-size:.8rem;color:#555}
+.dw{display:flex;align-items:center;gap:18px;flex-wrap:wrap}.dn{width:150px;height:150px}.lg{list-style:none;margin:0;padding:0;display:grid;gap:6px}.lg i{display:inline-block;width:14px;height:14px;border:2px solid var(--ink);border-radius:50%;margin-right:8px;vertical-align:-2px}
+.login{max-width:420px;margin:12vh auto 0}.login form{display:grid;gap:12px}.err{color:#c62828;font-weight:700;min-height:1.3em;margin:0}
+@media(prefers-reduced-motion:reduce){.live:before,.gi.on svg{animation:none}}
+</style></head><body><main class="d">
+<section class="card login" id="lg"><h1>Dados · Ticord</h1><p class="lead">Painel de entradas e servidor. Digite a chave de acesso.</p>
+<form id="lf"><input id="key" type="password" autocomplete="current-password" placeholder="Chave de acesso" required><p class="err" id="le" role="alert"></p><button class="btn" type="submit">Entrar</button></form></section>
+<section id="pn" hidden>
+<div class="top"><div><h1>Dados</h1><p class="lead">Entradas, lugares, contas, armazenamento e rede. <a href="/gestao">Gestão de contas</a></p></div><div class="live" role="status" id="up">Carregando…</div></div>
+<div class="kp" id="kp"></div>
+<div class="ctl">
+<button class="btn gi" id="gi" type="button" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg><span id="gl">Começar a virar</span></button>
+<div class="sp"><small><span id="lv">Parado</span><span>começa bem lento e vai acelerando</span></small><div class="rl v"><i id="lvb"></i></div><div class="rl" style="margin-top:5px;height:6px"><i id="tbar"></i></div></div>
+<div class="nv"><button class="btn alt" id="pv" type="button" aria-label="Painel anterior">‹</button><button class="btn alt" id="nx" type="button" aria-label="Próximo painel">›</button><button class="btn alt" id="out" type="button">Sair</button></div></div>
+<div class="dt" id="dt" role="group" aria-label="Painéis"></div>
+<div class="stage"><article class="pn" id="p0"></article><article class="pn" id="p1" hidden></article><article class="pn" id="p2" hidden></article><article class="pn" id="p3" hidden></article><article class="pn" id="p4" hidden></article><article class="pn" id="p5" hidden></article></div>
+<p class="err" id="er" role="alert"></p>
+</section></main>
+<script>
+(()=>{
+const $=s=>document.querySelector(s),esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const nf=n=>Number(n||0).toLocaleString('pt-BR');
+const by=b=>{b=+b||0;const u=['B','KB','MB','GB','TB'];let i=0;while(b>=1024&&i<4){b/=1024;i++}return b.toFixed(i?1:0).replace('.',',')+' '+u[i]};
+const COL=['#ff9fd2','#8fb3ff','#ffb36b','#a8e6b5','#ffe066','#c9a7ff'];
+let rn;try{rn=new Intl.DisplayNames(['pt-BR'],{type:'region'})}catch(e){}
+const cn=c=>{try{return rn&&rn.of(c)||c}catch(e){return c}};
+const fg=c=>/^[A-Z]{2}$/.test(c)?String.fromCodePoint(...[...c].map(x=>127397+x.charCodeAt(0))):'🌐';
+/* ---------- gráficos em SVG ---------- */
+const grid=(m,W,H,L,R,T,B)=>{let g='';for(let i=0;i<=3;i++){const q=m*i/3,y=T+(H-T-B)*(1-i/3);g+=`<line x1="${L}" x2="${W-R}" y1="${y}" y2="${y}" stroke="#0003" stroke-dasharray="3 4"/><text x="${L-6}" y="${y+4}" text-anchor="end" font-size="11" fill="#555">${Math.round(q)}</text>`}return g};
+const area=(v,lb,col,unit)=>{const W=640,H=210,L=36,R=10,T=14,B=26,m=Math.max(1,...v),n=v.length,x=i=>L+i*(W-L-R)/Math.max(1,n-1),y=q=>T+(H-T-B)*(1-q/m),st=Math.ceil(n/6),pts=v.map((q,i)=>x(i)+','+y(q)).join(' ');
+return`<svg class="ch" viewBox="0 0 ${W} ${H}" role="img" aria-label="Gráfico de linha">${grid(m,W,H,L,R,T,B)}<polygon points="${L},${y(0)} ${pts} ${x(n-1)},${y(0)}" fill="${col}" opacity=".5"/><polyline points="${pts}" fill="none" stroke="#161616" stroke-width="2.5" stroke-linejoin="round"/>${v.map((q,i)=>`<circle cx="${x(i)}" cy="${y(q)}" r="3" fill="#161616"><title>${esc(lb[i])}: ${nf(q)}${unit||''}</title></circle>`).join('')}${lb.map((t,i)=>i%st===0?`<text x="${x(i)}" y="${H-8}" text-anchor="middle" font-size="11" fill="#555">${esc(t)}</text>`:'').join('')}</svg>`};
+const bars=(v,lb,col)=>{const W=640,H=210,L=36,R=10,T=14,B=26,m=Math.max(1,...v),n=v.length,bw=(W-L-R)/n,st=Math.ceil(n/7);
+return`<svg class="ch" viewBox="0 0 ${W} ${H}" role="img" aria-label="Gráfico de barras">${grid(m,W,H,L,R,T,B)}${v.map((q,i)=>{const h=(H-T-B)*q/m;return`<rect x="${L+i*bw+4}" y="${H-B-h}" width="${bw-8}" height="${h}" rx="4" fill="${col}" stroke="#161616" stroke-width="2"><title>${esc(lb[i])}: ${nf(q)}</title></rect>${i%st===0?`<text x="${L+i*bw+bw/2}" y="${H-8}" text-anchor="middle" font-size="11" fill="#555">${esc(lb[i])}</text>`:''}`}).join('')}</svg>`};
+const hb=(rows,fn,fmt)=>rows&&rows.length?`<ul class="hb">${rows.map((r,i)=>`<li><span class="nm">${fn(r)}</span><i style="--w:${Math.max(3,r.n/rows[0].n*100)}%;--c:${COL[i%6]}"></i><b>${(fmt||nf)(r.n)}</b></li>`).join('')}</ul>`:'<p class="em">Ainda sem dados. Eles aparecem assim que alguém abrir o site.</p>';
+const donut=(parts,tot)=>{const t=parts.reduce((a,p)=>a+p.n,0)||1,r=52,c=2*Math.PI*r;let o=0;return`<svg class="dn" viewBox="0 0 140 140" role="img" aria-label="Contas"><circle cx="70" cy="70" r="${r}" fill="none" stroke="#eee" stroke-width="22"/>${parts.map(p=>{const l=p.n/t*c,s=`<circle cx="70" cy="70" r="${r}" fill="none" stroke="${p.c}" stroke-width="22" stroke-dasharray="${l} ${c-l}" stroke-dashoffset="${-o}" transform="rotate(-90 70 70)"/>`;o+=l;return s}).join('')}<text x="70" y="77" text-anchor="middle" font-size="24" font-weight="700">${nf(tot)}</text></svg>`};
+const meter=(a,u,m)=>`<div class="mtr"><div class="mh"><span>${a}</span><b>${by(u)} de ${by(m)}</b></div><div class="mt"><i style="width:${Math.min(100,Math.max(u>0?2:0,u/(m||1)*100))}%"></i></div></div>`;
+const tile=(a,b)=>`<div class="tt"><b>${esc(b)}</b><span>${esc(a)}</span></div>`;
+/* ---------- séries ---------- */
+const H24=d=>{const now=Math.floor(Date.now()/36e5),m=new Map((d.hours||[]).map(r=>[Math.floor(new Date(r.h)/36e5),r.n])),v=[],lb=[];for(let i=23;i>=0;i--){const k=now-i;v.push(m.get(k)||0);lb.push(new Date(k*36e5).toLocaleTimeString('pt-BR',{hour:'2-digit'})+'h')}return[v,lb]};
+const D14=rows=>{const m=new Map((rows||[]).map(r=>[r.d,r.n])),v=[],lb=[];for(let i=13;i>=0;i--){const k=new Date(Date.now()-i*864e5).toLocaleDateString('sv-SE',{timeZone:'America/Sao_Paulo'});v.push(m.get(k)||0);lb.push(k.slice(8)+'/'+k.slice(5,7))}return[v,lb]};
+/* ---------- rede deste aparelho ---------- */
+let pg=[],last=null;
+const drawNet=()=>{const c=$('#pc');if(!c)return;const ok=pg.filter(x=>x>0),avg=ok.length?Math.round(ok.reduce((a,b)=>a+b,0)/ok.length):0;
+ c.innerHTML=pg.length>1?area(pg,pg.map((_,i)=>(pg.length-1-i)*5+'s'),COL[3],' ms'):'<p class="em">Medindo…</p>';
+ $('#ps').innerHTML=tile('Agora',(pg[pg.length-1]||0)+' ms')+tile('Média',avg+' ms')+tile('Menor',(ok.length?Math.min(...ok):0)+' ms')+tile('Maior',(ok.length?Math.max(...ok):0)+' ms')};
+const ping=async()=>{const t=performance.now();try{await fetch('/api/launch?_='+Date.now(),{cache:'no-store'});pg.push(Math.round(performance.now()-t))}catch(e){pg.push(0)}if(pg.length>30)pg.shift();drawNet()};
+const dev=async()=>{const e=$('#dv');if(!e)return;try{const s=await navigator.storage.estimate();e.innerHTML=meter('Espaço que o navegador usa neste aparelho',s.usage,s.quota)}catch(x){e.innerHTML='<p class="em">Este navegador não informa o armazenamento do aparelho.</p>'}};
+/* ---------- desenho dos painéis ---------- */
+const render=d=>{last=d;const t=d.tot||{},u=d.users||{},x=d.extra||{},ms=x.msgs||{},ds=d.disk||{},sv=d.srv||{},co=navigator.connection||{},ac=(u.total||0)-(u.banned||0);
+$('#kp').innerHTML=[['Entradas',t.total],['Visitantes únicos',t.uniq],['Últimas 24 h',t.d1],['Online agora',t.online],['Contas',u.total],['Banidas',u.banned]].map(([a,b])=>`<div class="k"><b>${nf(b)}</b><span>${a}</span></div>`).join('');
+const[hv,hl]=H24(d),[dv,dl]=D14(d.days),[sv2,sl]=D14(d.signups);
+$('#p0').innerHTML=`<h2>Entradas no site</h2><h3>Últimas 24 horas</h3>${area(hv,hl,COL[1],' entradas')}<h3>Últimos 14 dias</h3>${bars(dv,dl,COL[0])}`;
+$('#p1').innerHTML=`<h2>Países e estados que mais entraram</h2><div class="g2"><div><h3>Países</h3>${hb(d.countries,r=>fg(r.k)+' '+esc(cn(r.k)))}</div><div><h3>Estados</h3>${hb(d.regions,r=>esc(r.k)+' <small>'+esc(cn(r.c))+'</small>')}</div></div>`;
+$('#p2').innerHTML=`<h2>Cidades e páginas</h2><div class="g2"><div><h3>Cidades</h3>${hb(d.cities,r=>esc(r.k)+' <small>'+esc(r.c)+'</small>')}</div><div><h3>Páginas mais abertas</h3>${hb(d.pages,r=>esc(r.k))}</div></div>`;
+$('#p3').innerHTML=`<h2>Gestão</h2><div class="g2"><div><h3>Contas</h3><div class="dw">${donut([{n:ac,c:COL[3]},{n:u.banned||0,c:'#ff8a8a'}],u.total)}<ul class="lg"><li><i style="background:${COL[3]}"></i>Ativas: ${nf(ac)}</li><li><i style="background:#ff8a8a"></i>Banidas: ${nf(u.banned)}</li><li><i style="background:${COL[1]}"></i>Verificadas: ${nf(u.verified)}</li><li><i style="background:${COL[4]}"></i>Beta: ${nf(u.beta)}</li></ul></div>
+<div class="tl" style="margin-top:14px">${tile('Apelações pendentes',nf(x.appeals))}${tile('Lista de espera',nf(x.waitlist))}${tile('Mensagens (24 h)',nf(ms.d1))}${tile('Mensagens (total)',nf(ms.total))}</div></div><div><h3>Cadastros nos últimos 14 dias</h3>${bars(sv2,sl,COL[2])}</div></div>`;
+$('#p4').innerHTML=`<h2>SSD e memória</h2><p class="nt">O site roda na Vercel, que não tem disco próprio. O armazenamento do servidor é o banco Neon.</p>${meter('Banco de dados (Neon)',ds.db,ds.limit)}<h3>Maiores tabelas</h3>${hb((ds.tables||[]).map(r=>({k:r.k,n:r.s})),r=>esc(r.k),by)}<h3>Servidor</h3><div class="tl">${tile('Memória em uso',by(sv.rss))}${tile('Heap do Node',by(sv.heap))}${tile('Núcleos',sv.cpus||'n/d')}</div><h3>Este aparelho</h3><div id="dv"></div>`;
+$('#p5').innerHTML=`<h2>Rede</h2><h3>Tempo de resposta do site, medido aqui a cada 5 s</h3><div id="pc"></div><div class="tl" id="ps"></div><h3>Servidor e conexão</h3><div class="tl">${tile('Banco de dados',(sv.db_ms||0)+' ms')}${tile('Tipo de rede',co.effectiveType||'n/d')}${tile('Velocidade estimada',co.downlink?co.downlink+' Mb/s':'n/d')}${tile('Latência estimada',co.rtt?co.rtt+' ms':'n/d')}${tile('Economia de dados',co.saveData?'Ligada':'Desligada')}${tile('RAM do aparelho',navigator.deviceMemory?'≥ '+navigator.deviceMemory+' GB':'n/d')}${tile('Núcleos do aparelho',navigator.hardwareConcurrency||'n/d')}</div>`;
+dev();drawNet()};
+/* ---------- carregar e atualizar sozinho ---------- */
+let key='',left=15;try{key=sessionStorage.getItem('adm')||''}catch(e){}
+const bye=()=>{key='';try{sessionStorage.removeItem('adm')}catch(e){}$('#pn').hidden=true;$('#lg').hidden=false;$('#key').value='';stop()};
+const load=async()=>{left=15;const r=await fetch('/api/visit',{headers:{'x-admin-key':key},cache:'no-store'}),j=await r.json().catch(()=>({}));
+ if(!r.ok)throw Object.assign(new Error(j.error||'Erro'),{st:r.status});render(j);$('#er').textContent='';$('#lg').hidden=true;$('#pn').hidden=false};
+const tick=()=>{if(document.hidden)return;left--;$('#up').textContent='Atualiza sozinho em '+Math.max(left,0)+' s';if(left<=0)load().catch(e=>{e.st===401?bye():$('#er').textContent=e.message})};
+let ti=0,pi=0;const start=()=>{if(ti)return;ti=setInterval(tick,1000);pi=setInterval(ping,5000);ping()};
+$('#lf').onsubmit=async e=>{e.preventDefault();$('#le').textContent='';key=$('#key').value;try{await load();try{sessionStorage.setItem('adm',key)}catch(x){}start()}catch(x){$('#le').textContent=x.message}};
+$('#out').onclick=bye;
+if(key)load().then(start).catch(()=>bye());
+/* ---------- painéis que viram: começa bem lento e vai acelerando ---------- */
+const NAMES=['Entradas','Países e estados','Cidades e páginas','Gestão','SSD e memória','Rede'],N=NAMES.length,MAXI=24000,MINI=2500,F=.88,reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+let cur=0,run=false,step=0,tm=0,busy=false;
+$('#dt').innerHTML=NAMES.map((n,i)=>`<button type="button" data-i="${i}">${n}</button>`).join('');
+const show=i=>{cur=(i+N)%N;for(let j=0;j<N;j++)$('#p'+j).hidden=j!==cur;document.querySelectorAll('#dt button').forEach((b,j)=>b.setAttribute('aria-current',j===cur))};
+const flip=(to,ms)=>{if(busy)return;if(reduce){show(to);return}busy=true;const el=$('#p'+cur),a=el.animate([{transform:'rotateY(0)'},{transform:'rotateY(90deg)'}],{duration:ms/2,easing:'ease-in',fill:'forwards'});
+ a.onfinish=()=>{show(to);a.cancel();$('#p'+cur).animate([{transform:'rotateY(-90deg)'},{transform:'rotateY(0)'}],{duration:ms/2,easing:'ease-out'}).onfinish=()=>{busy=false}}};
+const iv=()=>Math.max(MINI,MAXI*Math.pow(F,step)),lvl=()=>1+Math.round(9*(1-(iv()-MINI)/(MAXI-MINI)));
+const sched=()=>{const d=iv(),b=$('#tbar');$('#gi').style.setProperty('--sp',Math.max(1.2,d/2000)+'s');$('#lv').textContent='Velocidade '+lvl()+' de 10';$('#lvb').style.width=lvl()*10+'%';
+ b.style.transition='none';b.style.width='0';void b.offsetWidth;b.style.transition='width '+d+'ms linear';b.style.width='100%';
+ tm=setTimeout(()=>{flip(cur+1,Math.min(2200,Math.max(450,d*.1)));step++;sched()},d)};
+function stop(){run=false;clearTimeout(tm);const g=$('#gi');g.classList.remove('on');g.setAttribute('aria-pressed','false');$('#gl').textContent='Começar a virar';$('#lv').textContent='Parado';$('#lvb').style.width='0';$('#tbar').style.transition='none';$('#tbar').style.width='0'}
+$('#gi').onclick=()=>{if(run)return stop();run=true;step=0;const g=$('#gi');g.classList.add('on');g.setAttribute('aria-pressed','true');$('#gl').textContent='Parar de virar';sched()};
+$('#pv').onclick=()=>flip(cur-1,700);$('#nx').onclick=()=>flip(cur+1,700);
+$('#dt').onclick=e=>{const b=e.target.closest('button');if(b&&+b.dataset.i!==cur)flip(+b.dataset.i,700)};
+show(0);
+})();
+</script></body></html>

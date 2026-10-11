@@ -27,6 +27,15 @@
           "value": "noindex, nofollow"
         }
       ]
+    },
+    {
+      "source": "/dados",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
     }
   ],
   "redirects": [

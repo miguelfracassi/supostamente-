@@ -1,52 +1,41 @@
 <!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Dados · Ticord</title><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="stylesheet" href="/site.css">
 <style>
 body{padding-top:0}[hidden]{display:none!important}
-.d{max-width:1100px;margin:0 auto;padding:24px 20px 60px}
-.d h1{font-size:clamp(1.6rem,4vw,2.3rem);margin:0 0 4px}.lead{margin:0;color:#444}
-.top{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;flex-wrap:wrap}
-.live{font-weight:700;font-size:.9rem;background:#fff;border:2px solid var(--ink);border-radius:999px;padding:7px 16px;display:flex;gap:8px;align-items:center}
-.live:before{content:"";width:10px;height:10px;border-radius:50%;background:#2e9e4f;animation:pl 1.6s infinite}@keyframes pl{50%{opacity:.25}}
-.kp{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:18px 0}
-.k{background:#fff;border:2px solid var(--ink);border-radius:20px;padding:12px 16px;box-shadow:4px 4px 0 var(--ink)}.k b{display:block;font-size:1.8rem;line-height:1.1}.k span{font-size:.85rem;color:#555}
-.ctl{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
-.gi{display:inline-flex;align-items:center;gap:10px;padding:10px 20px 10px 12px}
-.gi svg{width:26px;height:26px}.gi.on svg{animation:sp var(--sp,12s) linear infinite}@keyframes sp{to{transform:rotate(360deg)}}
-.gi.on{background:#ff9fd2;color:var(--ink)}
-.sp{flex:1;min-width:210px}.sp small{display:flex;justify-content:space-between;font-weight:700;font-size:.82rem;margin-bottom:4px}
-.rl{height:10px;border:2px solid var(--ink);border-radius:999px;background:#fff;overflow:hidden}.rl i{display:block;height:100%;width:0;background:var(--ink)}
-.rl.v i{background:#ffb36b;transition:width .6s}
-.nv{display:flex;gap:6px;align-items:center}.nv .btn{padding:8px 14px}
-.dt{display:flex;gap:6px;flex-wrap:wrap}.dt button{font:inherit;font-weight:700;font-size:.82rem;cursor:pointer;border:2px solid var(--ink);border-radius:999px;padding:5px 12px;background:#fff}
-.dt button[aria-current=true]{background:var(--ink);color:#fff}.dt button:focus-visible,.gi:focus-visible{outline:3px solid var(--b);outline-offset:2px}
-.stage{perspective:1500px;margin-top:14px}
-.pn{background:#fff;border:2px solid var(--ink);border-radius:28px;padding:22px;box-shadow:8px 8px 0 var(--ink);min-height:440px;backface-visibility:hidden}
-.pn h2{margin:0 0 6px;font-size:1.35rem}.pn h3{margin:16px 0 6px;font-size:.95rem;color:#444}
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:26px}@media(max-width:760px){.g2{grid-template-columns:1fr}}
+.d{max-width:900px;margin:0 auto;padding:0 20px 140px}
+.d h1{font-size:clamp(1.8rem,5vw,2.8rem);margin:10px 0 4px}.lead{margin:0;color:#444}
+.bar{position:sticky;top:0;z-index:5;background:#fffffff2;border-bottom:2px solid var(--ink);margin:0 -20px 26px;padding:10px 20px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.gi{display:inline-flex;align-items:center;gap:10px;padding:10px 20px 10px 14px}.gi svg{width:22px;height:22px}
+.gi.on{background:#ff9fd2;color:var(--ink)}.gi.on svg{animation:bob var(--sp,2.4s) ease-in-out infinite}@keyframes bob{50%{transform:translateY(5px)}}
+.gi:focus-visible{outline:3px solid var(--b);outline-offset:2px}
+.sp{flex:1;min-width:190px}.sp small{display:flex;justify-content:space-between;gap:8px;font-weight:700;font-size:.8rem;margin-bottom:4px}
+.rl{height:10px;border:2px solid var(--ink);border-radius:999px;background:#fff;overflow:hidden}.rl i{display:block;height:100%;width:0;background:#ffb36b}
+.live{font-weight:700;font-size:.85rem;display:flex;gap:8px;align-items:center}.live:before{content:"";width:10px;height:10px;border-radius:50%;background:#2e9e4f;animation:pl 1.6s infinite}@keyframes pl{50%{opacity:.25}}
+.kp{display:flex;flex-wrap:wrap;gap:14px 44px;margin:28px 0 8px}.k b{display:block;font-size:2.3rem;line-height:1.05}.k span{font-size:.88rem;color:#555}
+.pn{padding:56px 0 40px;border-top:2px solid var(--ink);margin-top:30px}.pn h2{margin:0 0 8px;font-size:1.7rem}.pn h3{margin:26px 0 8px;font-size:1rem;color:#444}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:34px}@media(max-width:760px){.g2{grid-template-columns:1fr}}
 svg.ch{width:100%;height:auto;display:block}
-.hb{list-style:none;margin:0;padding:0;display:grid;gap:9px}.hb li{display:grid;grid-template-columns:minmax(90px,38%) 1fr auto;gap:10px;align-items:center}
+.hb{list-style:none;margin:0;padding:0;display:grid;gap:10px}.hb li{display:grid;grid-template-columns:minmax(90px,38%) 1fr auto;gap:10px;align-items:center}
 .hb .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.hb small{color:#666}
 .hb i{display:block;height:16px;border:2px solid var(--ink);border-radius:999px;background:linear-gradient(var(--c),var(--c)) 0/var(--w) 100% no-repeat,#fff}
-.em,.nt{color:#555;margin:6px 0}.nt{font-size:.9rem}
-.mtr{margin:12px 0}.mh{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:.92rem;margin-bottom:5px}
+.em,.nt{color:#555;margin:6px 0}.nt{font-size:.92rem}
+.mtr{margin:14px 0}.mh{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:.92rem;margin-bottom:5px}
 .mt{height:20px;border:2px solid var(--ink);border-radius:999px;background:#fff;overflow:hidden}.mt i{display:block;height:100%;background:#8fb3ff;border-right:2px solid var(--ink)}
-.tl{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}.tt{border:2px solid var(--ink);border-radius:16px;padding:9px 12px;background:#fffbea}.tt b{display:block;font-size:1.15rem}.tt span{font-size:.8rem;color:#555}
+.tl{display:flex;flex-wrap:wrap;gap:12px 34px}.tt{border-left:4px solid var(--ink);padding:1px 12px}.tt b{display:block;font-size:1.2rem}.tt span{font-size:.82rem;color:#555}
 .dw{display:flex;align-items:center;gap:18px;flex-wrap:wrap}.dn{width:150px;height:150px}.lg{list-style:none;margin:0;padding:0;display:grid;gap:6px}.lg i{display:inline-block;width:14px;height:14px;border:2px solid var(--ink);border-radius:50%;margin-right:8px;vertical-align:-2px}
 .login{max-width:420px;margin:12vh auto 0}.login form{display:grid;gap:12px}.err{color:#c62828;font-weight:700;min-height:1.3em;margin:0}
 @media(prefers-reduced-motion:reduce){.live:before,.gi.on svg{animation:none}}
 </style></head><body><main class="d">
 <section class="card login" id="lg"><h1>Dados · Ticord</h1><p class="lead">Painel de entradas e servidor. Digite a chave de acesso.</p>
 <form id="lf"><input id="key" type="password" autocomplete="current-password" placeholder="Chave de acesso" required><p class="err" id="le" role="alert"></p><button class="btn" type="submit">Entrar</button></form></section>
-<section id="pn" hidden>
-<div class="top"><div><h1>Dados</h1><p class="lead">Entradas, lugares, contas, armazenamento e rede. <a href="/gestao">Gestão de contas</a></p></div><div class="live" role="status" id="up">Carregando…</div></div>
+<div id="pn" hidden>
+<div class="bar"><button class="btn gi" id="gi" type="button" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v15"/><path d="M5 12l7 7 7-7"/></svg><span id="gl">Começar a descer</span></button>
+<div class="sp"><small><span id="lv">Parado</span><span>começa bem lento e vai acelerando</span></small><div class="rl"><i id="lvb"></i></div></div>
+<div class="live" role="status" id="up">Carregando…</div><button class="btn alt" id="out" type="button">Sair</button></div>
+<h1>Dados</h1><p class="lead">Entradas, lugares, contas, armazenamento e rede, tudo numa página que se atualiza sozinha. <a href="/gestao">Gestão de contas</a></p>
 <div class="kp" id="kp"></div>
-<div class="ctl">
-<button class="btn gi" id="gi" type="button" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg><span id="gl">Começar a virar</span></button>
-<div class="sp"><small><span id="lv">Parado</span><span>começa bem lento e vai acelerando</span></small><div class="rl v"><i id="lvb"></i></div><div class="rl" style="margin-top:5px;height:6px"><i id="tbar"></i></div></div>
-<div class="nv"><button class="btn alt" id="pv" type="button" aria-label="Painel anterior">‹</button><button class="btn alt" id="nx" type="button" aria-label="Próximo painel">›</button><button class="btn alt" id="out" type="button">Sair</button></div></div>
-<div class="dt" id="dt" role="group" aria-label="Painéis"></div>
-<div class="stage"><article class="pn" id="p0"></article><article class="pn" id="p1" hidden></article><article class="pn" id="p2" hidden></article><article class="pn" id="p3" hidden></article><article class="pn" id="p4" hidden></article><article class="pn" id="p5" hidden></article></div>
+<section class="pn" id="p0"></section><section class="pn" id="p1"></section><section class="pn" id="p2"></section><section class="pn" id="p3"></section><section class="pn" id="p4"></section><section class="pn" id="p5"></section>
 <p class="err" id="er" role="alert"></p>
-</section></main>
+</div></main>
 <script>
 (()=>{
 const $=s=>document.querySelector(s),esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -98,21 +87,19 @@ let ti=0,pi=0;const start=()=>{if(ti)return;ti=setInterval(tick,1000);pi=setInte
 $('#lf').onsubmit=async e=>{e.preventDefault();$('#le').textContent='';key=$('#key').value;try{await load();try{sessionStorage.setItem('adm',key)}catch(x){}start()}catch(x){$('#le').textContent=x.message}};
 $('#out').onclick=bye;
 if(key)load().then(start).catch(()=>bye());
-/* ---------- painéis que viram: começa bem lento e vai acelerando ---------- */
-const NAMES=['Entradas','Países e estados','Cidades e páginas','Gestão','SSD e memória','Rede'],N=NAMES.length,MAXI=24000,MINI=2500,F=.88,reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
-let cur=0,run=false,step=0,tm=0,busy=false;
-$('#dt').innerHTML=NAMES.map((n,i)=>`<button type="button" data-i="${i}">${n}</button>`).join('');
-const show=i=>{cur=(i+N)%N;for(let j=0;j<N;j++)$('#p'+j).hidden=j!==cur;document.querySelectorAll('#dt button').forEach((b,j)=>b.setAttribute('aria-current',j===cur))};
-const flip=(to,ms)=>{if(busy)return;if(reduce){show(to);return}busy=true;const el=$('#p'+cur),a=el.animate([{transform:'rotateY(0)'},{transform:'rotateY(90deg)'}],{duration:ms/2,easing:'ease-in',fill:'forwards'});
- a.onfinish=()=>{show(to);a.cancel();$('#p'+cur).animate([{transform:'rotateY(-90deg)'},{transform:'rotateY(0)'}],{duration:ms/2,easing:'ease-out'}).onfinish=()=>{busy=false}}};
-const iv=()=>Math.max(MINI,MAXI*Math.pow(F,step)),lvl=()=>1+Math.round(9*(1-(iv()-MINI)/(MAXI-MINI)));
-const sched=()=>{const d=iv(),b=$('#tbar');$('#gi').style.setProperty('--sp',Math.max(1.2,d/2000)+'s');$('#lv').textContent='Velocidade '+lvl()+' de 10';$('#lvb').style.width=lvl()*10+'%';
- b.style.transition='none';b.style.width='0';void b.offsetWidth;b.style.transition='width '+d+'ms linear';b.style.width='100%';
- tm=setTimeout(()=>{flip(cur+1,Math.min(2200,Math.max(450,d*.1)));step++;sched()},d)};
-function stop(){run=false;clearTimeout(tm);const g=$('#gi');g.classList.remove('on');g.setAttribute('aria-pressed','false');$('#gl').textContent='Começar a virar';$('#lv').textContent='Parado';$('#lvb').style.width='0';$('#tbar').style.transition='none';$('#tbar').style.width='0'}
-$('#gi').onclick=()=>{if(run)return stop();run=true;step=0;const g=$('#gi');g.classList.add('on');g.setAttribute('aria-pressed','true');$('#gl').textContent='Parar de virar';sched()};
-$('#pv').onclick=()=>flip(cur-1,700);$('#nx').onclick=()=>flip(cur+1,700);
-$('#dt').onclick=e=>{const b=e.target.closest('button');if(b&&+b.dataset.i!==cur)flip(+b.dataset.i,700)};
-show(0);
+/* ---------- descer a página sozinho: começa bem lento e vai acelerando ---------- */
+const V0=5,VMAX=220,TAU=63; /* px/s: 5 no começo, chega a 220 em ~4 min */
+let run=false,raf=0,t0=0,pos=0,prev=0,wait=0;
+const lvl=v=>1+Math.round(9*Math.log(v/V0)/Math.log(VMAX/V0));
+function stop(){run=false;cancelAnimationFrame(raf);const g=$('#gi');g.classList.remove('on');g.setAttribute('aria-pressed','false');$('#gl').textContent='Começar a descer';$('#lv').textContent='Parado';$('#lvb').style.width='0'}
+const frame=ts=>{if(!run)return;const dt=Math.min(.1,(ts-prev)/1000);prev=ts;const max=document.documentElement.scrollHeight-innerHeight;
+ if(wait>0){wait-=dt;if(wait<=0){pos=0;scrollTo(0,0);t0=ts}}
+ else{const v=Math.min(VMAX,V0*Math.exp((ts-t0)/1000/TAU));pos+=v*dt;scrollTo(0,pos);
+  $('#lv').textContent='Velocidade '+lvl(v)+' de 10';$('#lvb').style.width=lvl(v)*10+'%';$('#gi').style.setProperty('--sp',Math.max(.5,2.4-v/100)+'s');
+  if(pos>=max-1)wait=3}
+ raf=requestAnimationFrame(frame)};
+$('#gi').onclick=()=>{if(run)return stop();run=true;pos=scrollY;t0=prev=performance.now();wait=0;const g=$('#gi');g.classList.add('on');g.setAttribute('aria-pressed','true');$('#gl').textContent='Parar de descer';raf=requestAnimationFrame(frame)};
+['wheel','touchstart','keydown','mousedown'].forEach(e=>addEventListener(e,ev=>{if(run&&!ev.target.closest('#gi'))stop()},{passive:true}));
+
 })();
 </script></body></html>

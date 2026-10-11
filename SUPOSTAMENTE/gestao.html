@@ -5,7 +5,7 @@ body{padding-top:0}.ad{max-width:1040px;margin:0 auto;padding:28px 20px 60px}
 .bar .btn,.fl2 .btn{padding:10px 18px;font-size:.9rem}
 .fl2{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}.fl2 .btn[aria-pressed=false]{background:#fff;color:var(--ink)}
 .tw{overflow-x:auto;background:#fff;border:2px solid var(--ink);border-radius:24px;box-shadow:6px 6px 0 var(--ink)}
-table{width:100%;border-collapse:collapse;min-width:760px}th,td{text-align:left;padding:12px 16px;border-bottom:1px solid #e4e4ea;white-space:nowrap}
+table{width:100%;border-collapse:collapse;min-width:980px}th,td{text-align:left;padding:12px 16px;border-bottom:1px solid #e4e4ea;white-space:nowrap}
 th{font-size:.8rem;text-transform:uppercase;letter-spacing:.05em;color:#555}tr:last-child td{border-bottom:0}tr.bn td{background:#fff3f3}
 .st{display:inline-block;font-weight:700;font-size:.8rem;border-radius:999px;padding:3px 12px;border:2px solid var(--ink);background:#c8f2cf}.st.b{background:#ffc9c9}
 .ac{display:flex;gap:6px;flex-wrap:wrap}.ac button{font:inherit;font-weight:700;font-size:.82rem;cursor:pointer;border:2px solid var(--ink);border-radius:999px;padding:5px 12px;background:#fff}
@@ -27,7 +27,7 @@ dialog h2{margin:0 0 4px;font-size:1.3rem}dialog p{margin:0 0 14px;color:#444}di
 <div class="cfg"><div><b>Plano Beta</b><span id="bx">Quando liberado, quem entra na conta vê o botão "Resgatar plano Beta".</span></div><div class="bt2"><button class="sw" id="bo" type="button" role="switch" aria-checked="false">Fechado</button><label for="bs">Vagas (0 = sem limite)</label><input id="bs" type="number" min="0" max="100000" value="0"><button class="btn alt" id="bsv" type="button" style="padding:9px 18px;font-size:.9rem">Salvar</button></div></div>
 <div class="bar"><input id="q" type="search" placeholder="Buscar por nome ou e-mail"><button class="btn alt" id="rf" type="button">Atualizar</button><button class="btn alt" id="out" type="button">Sair</button></div>
 <div class="fl2" role="group" aria-label="Filtro"><button class="btn" type="button" data-f="all" aria-pressed="true"></button><button class="btn" type="button" data-f="act" aria-pressed="false"></button><button class="btn" type="button" data-f="ban" aria-pressed="false"></button></div>
-<div class="tw"><table><thead><tr><th>#</th><th>Nome</th><th>E-mail</th><th>Status</th><th>Planos</th><th>Cadastro</th><th>Msgs</th><th>Ações</th></tr></thead><tbody id="tb"></tbody></table></div>
+<div class="tw"><table><thead><tr><th>#</th><th>Nome</th><th>E-mail</th><th>Local</th><th>Status</th><th>Planos</th><th>Cadastro</th><th>Msgs</th><th>Ações</th></tr></thead><tbody id="tb"></tbody></table></div>
 <p class="msg" id="ms" role="status"></p></section>
 </main>
 <dialog id="dp"><form method="dialog" id="pf"><h2>Mudar senha</h2><p id="dn"></p>
@@ -43,11 +43,15 @@ let key='',rows=[],flt='all',tgt=null;try{key=sessionStorage.getItem('adm')||''}
 const fmtD=t=>new Date(t).toLocaleString('pt-BR',{dateStyle:'short',timeStyle:'short'});
 const api=(m,b)=>fetch('/api/admin-users',{method:m,headers:Object.assign({'x-admin-key':key},b?{'Content-Type':'application/json'}:{}),body:b?JSON.stringify(b):undefined}).then(async r=>{const j=await r.json().catch(()=>({}));if(!r.ok)throw Object.assign(new Error(j.error||'Erro'),{st:r.status});return j});
 const say=(t,c)=>{const m=$('#ms');m.textContent=t;m.className='msg '+(c||'')};
+let rg;try{rg=new Intl.DisplayNames(['pt-BR'],{type:'region'})}catch(e){}
+const cn=c=>{try{return rg&&rg.of(c)||c}catch(e){return c}},fg=c=>/^[A-Z]{2}$/.test(c||'')?String.fromCodePoint(...[...c].map(x=>127397+x.charCodeAt(0)))+' ':'';
+const locT=r=>[r.last_city,r.last_region,r.last_country?cn(r.last_country):''].filter(Boolean).join(', ');
+const loc=r=>locT(r)?`<span title="Visto por último em ${esc(fmtD(r.last_seen))}">${fg(r.last_country)}${esc(locT(r))}</span>`:'—';
 const draw=()=>{const q=$('#q').value.trim().toLowerCase(),nb=rows.filter(r=>r.banned).length;
  const lab={all:'Todos ('+rows.length+')',act:'Ativos ('+(rows.length-nb)+')',ban:'Banidos ('+nb+')'};
  document.querySelectorAll('[data-f]').forEach(b=>{b.textContent=lab[b.dataset.f];b.setAttribute('aria-pressed',b.dataset.f===flt)});
- const l=rows.filter(r=>(flt==='all'||(flt==='ban'?r.banned:!r.banned))&&(!q||r.name.toLowerCase().includes(q)||r.email.toLowerCase().includes(q)));
- $('#tb').innerHTML=l.length?l.map(r=>`<tr class="${r.banned?'bn':''}"><td>${r.id}</td><td>${esc(r.name)}</td><td>${esc(r.email)}</td><td><span class="st${r.banned?' b':''}">${r.banned?'Banido':'Ativo'}</span></td><td>${r.verified?'<span class="pl">✔ Verificado</span>':''}${r.beta?'<span class="pl b">BETA</span>':''}${r.verified||r.beta?'':'—'}</td><td>${esc(fmtD(r.created_at))}</td><td>${r.msgs}</td>
+ const l=rows.filter(r=>(flt==='all'||(flt==='ban'?r.banned:!r.banned))&&(!q||r.name.toLowerCase().includes(q)||r.email.toLowerCase().includes(q)||locT(r).toLowerCase().includes(q)));
+ $('#tb').innerHTML=l.length?l.map(r=>`<tr class="${r.banned?'bn':''}"><td>${r.id}</td><td>${esc(r.name)}</td><td>${esc(r.email)}</td><td>${loc(r)}</td><td><span class="st${r.banned?' b':''}">${r.banned?'Banido':'Ativo'}</span></td><td>${r.verified?'<span class="pl">✔ Verificado</span>':''}${r.beta?'<span class="pl b">BETA</span>':''}${r.verified||r.beta?'':'—'}</td><td>${esc(fmtD(r.created_at))}</td><td>${r.msgs}</td>
  <td><div class="ac"><button type="button" class="vc" data-chat="${r.id}">Ver conversa</button><button type="button" data-a="${r.banned?'unban':'ban'}" data-id="${r.id}">${r.banned?'Desbanir':'Banir'}</button><button type="button" data-a="${r.verified?'unverify':'verify'}" data-id="${r.id}">${r.verified?'Tirar verificado':'Verificar'}</button><button type="button" data-a="${r.beta?'revoke_beta':'grant_beta'}" data-id="${r.id}">${r.beta?'Tirar beta':'Dar beta'}</button><button type="button" data-a="pw" data-id="${r.id}">Mudar senha</button><button type="button" class="dg" data-a="delete" data-id="${r.id}">Excluir</button></div></td></tr>`).join(''):'<tr><td colspan="8" class="empty">Nenhuma conta encontrada.</td></tr>'};
 const ldDraw=on=>{const b=$('#ld');b.setAttribute('aria-checked',on);b.textContent=on?'Ligada':'Desligada';$('#ldx').textContent=on?'Mostra o Bup + "From Ticord" ao trocar de página.':'Desligada: as páginas trocam direto, sem tela de carregamento (pode levar até 1 min para valer para todos).'};
 const btDraw=b=>{const o=$('#bo');o.setAttribute('aria-checked',b.open);o.textContent=b.open?'Liberado':'Fechado';$('#bs').value=b.slots;$('#bx').textContent=(b.open?'Resgate liberado: quem entra na conta vê o botão "Resgatar plano Beta". ':'Resgate fechado: ninguém vê o botão de resgate. ')+b.used+' conta'+(b.used===1?'':'s')+' com beta'+(b.slots?' de '+b.slots+' vagas':' (sem limite de vagas)')+'.'};
@@ -68,7 +72,7 @@ $('#tb').onclick=async e=>{const b=e.target.closest('button[data-a]');if(!b)retu
  try{await api('POST',{action:a,id:r.id});
   if(a==='delete'){rows=rows.filter(x=>x.id!==r.id);say('Conta excluída.','ok')}else{const M={ban:['banned',true,'Conta banida.'],unban:['banned',false,'Conta desbanida.'],verify:['verified',true,'Verificado!'],unverify:['verified',false,'Verificado removido.'],grant_beta:['beta',true,'Beta concedido.'],revoke_beta:['beta',false,'Beta removido.']}[a];r[M[0]]=M[1];say(M[2],'ok');if(a.endsWith('beta')){const n=rows.filter(x=>x.beta).length;$('#bx').textContent=$('#bx').textContent.replace(/\d+ contas? com beta/,n+' conta'+(n===1?'':'s')+' com beta')}}draw()}catch(x){fail(x)}};
 let chatId=0;
-const openChat=async id=>{const r=rows.find(x=>x.id==id);if(!r)return;chatId=id;$('#dct').textContent='Conversa de '+r.name;$('#dcs').textContent=r.email+(r.banned?' · conta banida':'');
+const openChat=async id=>{const r=rows.find(x=>x.id==id);if(!r)return;chatId=id;$('#dct').textContent='Conversa de '+r.name;$('#dcs').textContent=r.email+(locT(r)?' · '+locT(r):'')+(r.banned?' · conta banida':'');
  if(!$('#dc').open)$('#dc').showModal();$('#dcm').innerHTML='<p class="empty">Carregando…</p>';
  try{const x=await fetch('/api/admin-users?chat='+id,{headers:{'x-admin-key':key},cache:'no-store'}),j=await x.json().catch(()=>({}));
   if(x.status===401){$('#dc').close();return bye()}if(!x.ok)throw new Error(j.error||'Erro');

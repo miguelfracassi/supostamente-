@@ -10,6 +10,13 @@ module.exports = async (req, res) => {
   try {
     await init();
     if (req.method === 'GET') {
+      const cid = parseInt(req.query && req.query.chat, 10);
+      if (cid) {
+        const [u] = await sql`SELECT id, name, email, banned FROM users WHERE id = ${cid}`;
+        if (!u) return res.status(404).json({ error: 'Conta não encontrada.' });
+        const msgs = await sql`SELECT role, content, mood, created_at FROM messages WHERE user_id = ${cid} ORDER BY id DESC LIMIT 400`;
+        return res.status(200).json({ user: u, messages: msgs.reverse() });
+      }
       const rows = await sql`SELECT u.id, u.name, u.email, u.banned, u.verified, u.beta, u.created_at, (SELECT COUNT(*)::int FROM messages m WHERE m.user_id = u.id AND m.role = 'user') AS msgs FROM users u ORDER BY u.created_at DESC`;
       let loader = true; try { loader = await settings.loader(); } catch (e) {}
       const [pp] = await sql`SELECT COUNT(*)::int AS n FROM appeals WHERE status = 'pending'`;
